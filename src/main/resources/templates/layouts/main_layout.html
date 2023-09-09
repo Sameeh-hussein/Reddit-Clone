@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:fragment="head(title)">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title th:text="${title}">Springit - Spring Boot Reddit Clone</title>
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" th:href="@{/libs/bootstrap/css/bootstrap.min.css}"/>
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" th:href="@{/css/springit.css}">
+        <!-- Google Fonts -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald|Roboto" >
+        <!-- Font Awesome (for icons) -->
+        <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+        <link rel="icon" sizes="16x16 32x32 48x48" type="image/png" href="/images/demaria.png" />
+    </head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-spring fixed-top" th:fragment="navigation">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                <style>svg{fill:#ffffff}</style>
+                <path d="M440.3 203.5c-15 0-28.2 6.2-37.9 15.9-35.7-24.7-83.8-40.6-137.1-42.3L293 52.3l88.2
+                         19.8c0 21.6 17.6 39.2 39.2 39.2 22 0 39.7-18.1 39.7-39.7s-17.6-39.7-39.7-39.7c-15.4
+                         0-28.7 9.3-35.3 22l-97.4-21.6c-4.9-1.3-9.7 2.2-11 7.1L246.3 177c-52.9 2.2-100.5 18.1-136.3
+                         42.8-9.7-10.1-23.4-16.3-38.4-16.3-55.6 0-73.8 74.6-22.9 100.1-1.8 7.9-2.6 16.3-2.6 24.7
+                         0 83.8 94.4 151.7 210.3 151.7 116.4 0 210.8-67.9 210.8-151.7 0-8.4-.9-17.2-3.1-25.1
+                         49.9-25.6 31.5-99.7-23.8-99.7zM129.4 308.9c0-22 17.6-39.7 39.7-39.7 21.6 0 39.2 17.6
+                         39.2 39.7 0 21.6-17.6 39.2-39.2 39.2-22 .1-39.7-17.6-39.7-39.2zm214.3 93.5c-36.4
+                         36.4-139.1 36.4-175.5 0-4-3.5-4-9.7 0-13.7 3.5-3.5 9.7-3.5 13.2 0 27.8 28.5 120 29 149
+                         0 3.5-3.5 9.7-3.5 13.2 0 4.1 4 4.1 10.2.1 13.7zm-.8-54.2c-21.6 0-39.2-17.6-39.2-39.2
+                         0-22 17.6-39.7 39.2-39.7 22 0 39.7 17.6 39.7 39.7-.1 21.5-17.7 39.2-39.7 39.2z"/></svg>
+            REDDIT
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">
+                        <i class="fas fa-home" aria-hidden="true"></i> Home
+                    </a>
+                </li>
+
+                <!-- if user is signed in -->
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/link/submit}">
+                        <i class="fa fa-link" aria-hidden="true"></i> Submit Link</a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/profile}">
+                        <i class="fa fa-user" aria-hidden="true"></i> Account</a>
+                </li>
+                <li class="nav-item">
+                    <form method="POST" th:action="@{/logout}" sec:authorize="isAuthenticated()">
+                        <button class="nav-link"><i class="fa fa-sign-out-alt" aria-hidden="true"></i> Sign Out</button>
+                    </form>
+                </li>
+
+                <!-- if user is not signed in -->
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <a class="nav-link" th:href="@{/login}">
+                        <i class="fa fa-sign-in-alt" aria-hidden="true"></i> Sign In</a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <a class="nav-link" th:href="@{/register}">
+                        <i class="fa fa-user-plus" aria-hidden="true"></i> Register</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="jumbotron jumbotron-fluid" th:fragment="jumbotron">
+    <div class="container" align="center">
+        <h2 class="display-4">Reddit Al-Ghalaaba</h2>
+        <p class="lead">This is a reddit clone built using Spring Boot 3, Spring Framework 5</p>
+    </div>
+</div>
+
+<div class="container" th:fragment="content">
+    <p>This is your main content</p>
+</div>
+
+</body>
+</html>

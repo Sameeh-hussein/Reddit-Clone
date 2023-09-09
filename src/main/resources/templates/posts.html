@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts/main_layout :: head(title = 'Springit - Account Profile Page')}">
+</head>
+<body>
+
+<nav th:replace="~{layouts/main_layout :: nav}"></nav>
+<div th:replace="~{layouts/main_layout :: jumbotron}"></div>
+
+<!-- profile -->
+<div id="profile" class="container">
+
+    <div class="row">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/profile/posts}">Posts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/profile/comments}">Comments</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="row">
+
+        <div class="col-8">
+            <div class="row" th:each="link : ${links}">
+                <div class="card col-12" style="width: 18rem;">
+                    <div class="card-body">
+                        <a class="card-title" th:href="@{'/link/' + ${link.id}}" th:text="${link.title}">title goes
+                            here</a>
+                        <h6 class="tagline ">submitted
+                            <time th:title="${link.getCreationDate()}" th:datetime="${link.getCreationDate()}"
+                                  class="live-timestamp" th:text="${link.getPrettyTime()}">1 hour(s)
+                            </time>
+                            by
+                            <a th:href="@{'/u/' + ${link.getUser().getAlias()}}" class="author"
+                               th:text="${link.getUser().getAlias()}">therealdanvega</a>
+                        </h6>
+                        <a th:href="@{'/link/' + ${link.id} + '#comments'}" class="comments"
+                           th:text="|${link.getComments().size()} comments|"><i class="fas fa-comments"></i> 0 comments</a>
+                        <a href="/" class="share"><i class="fas fa-share-square"></i> share</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Right Side -->
+        <div class="col-3 offset-1">
+            <div class="row">
+                <div class="card col-12">
+                    <img class="card-img-top" th:src="@{/images/di_maria.webp}" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">
+                            <a href="/profile" th:text="${user.getAlias()}">/u/therealdanvega</a>
+                        </p>
+                        <a th:href="@{/link/submit}">
+                            <button type="button" class="btn btn-primary btn-lg btn-block">New Post</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card col-12">
+                    <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+                    <div class="card-body">
+                        <h5 class="card-title">Your Information</h5>
+                        <p class="card-text">
+                            Posts: <span th:text="${user.getLinks().size()}">#</span><br/>
+                            Comments: <span th:text="${user.getComments().size()}">#</span><br/>
+                            User Since: <span
+                                th:text="${#dates.format(user.getRegistrationDate(), 'MMMM d, yyyy')}">#</span><br/>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card col-12">
+                    <h5 class="card-title recentLinks">Recent Links Added</h5>
+                    <ul class="list-group list-group-flush" th:each="link : ${SortedLinks}">
+                        <li class="list-group-item">
+                            <a th:href="@{'/link/' + ${link.id}}" th:text="${link.title}">
+                                title goes here</a>
+
+                            <h6 class="tagline ">submitted
+                                <time th:title="${link.getCreationDate()}" th:datetime="${link.getCreationDate()}"
+                                      class="live-timestamp" th:text="${link.getPrettyTime()}">1 hour(s)
+                                </time>
+                            </h6>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- // row -->
+
+</div><!-- // profile -->
+
+</body>
+</html>
